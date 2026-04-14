@@ -1,5 +1,5 @@
 #! /usr/bin/env python
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 ########################
 # Python 3.6
@@ -7,7 +7,6 @@
 ########################
 
 # IMPORTS
-import sys
 import pygame
 
 # FILE IMPORTS
@@ -33,17 +32,18 @@ import game_config as cfg
 ###################| CLASSES |######################
 ####################################################
 
-class Block():
-    """ block entity.
 
-        INPUTS: 
-                x coordinate
-                y coordinate
-                type of the block (str)
-        """
+class Block:
+    """block entity.
 
-    def __init__(self, block_x, block_y, type='default'):
-        
+    INPUTS:
+            x coordinate
+            y coordinate
+            type of the block (str)
+    """
+
+    def __init__(self, block_x, block_y, type="default"):
+
         # Applies coordinates and sizes.
         self.rect = pygame.Rect(block_x, block_y, cfg.BLOCK_WIDTH, cfg.BLOCK_HEIGHT)
 
@@ -51,14 +51,15 @@ class Block():
         self.type = type
 
     def move(self, distance_x, distance_y):
-        """ Moves the blocks relatively.
+        """Moves the blocks relatively.
 
-        INPUTS: 
+        INPUTS:
                 distance in x
                 distance in y
         """
         self.rect.x += distance_x
         self.rect.y += distance_y
+
 
 ####################################################
 ##################| FUNCTIONS |#####################
@@ -79,6 +80,5 @@ class Block():
 ####################| PROGRAM |#####################
 ####################################################
 
-if __name__ == "__main__" :
+if __name__ == "__main__":
     pass
-    
