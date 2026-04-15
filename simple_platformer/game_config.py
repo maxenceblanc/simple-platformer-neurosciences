@@ -1,12 +1,5 @@
-#! /usr/bin/env python
-# -*- coding: utf-8 -*-
 
-########################
-# Python 3.6
-# Author : Maxence Blanc - https://github.com/maxenceblanc
-########################
-
-from pygame.locals import *
+from pygame import locals as pylocals
 
 import levels.levels as levels
 
@@ -69,16 +62,16 @@ SPEED_CAMERA_X = 80 * PROPORTION
 
 
 # Keys
-KEY_RIGHT = K_d
-KEY_LEFT = K_q
-KEY_UP = K_z
+KEY_RIGHT = pylocals.K_d
+KEY_LEFT = pylocals.K_q
+KEY_UP = pylocals.K_z
 
-KEY_RECORD = K_o
-KEY_LOAD = K_p
+KEY_RECORD = pylocals.K_o
+KEY_LOAD = pylocals.K_p
 
-KEY_RESTART = K_SPACE
-KEY_CUSTOM = K_n
+KEY_RESTART = pylocals.K_SPACE
+KEY_CUSTOM = pylocals.K_n
 
 # Camera keys
-CAMERA_RIGHT = K_RIGHT
-CAMERA_LEFT = K_LEFT
+CAMERA_RIGHT = pylocals.K_RIGHT
+CAMERA_LEFT = pylocals.K_LEFT

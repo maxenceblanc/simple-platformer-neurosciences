@@ -1,17 +1,9 @@
-#! /usr/bin/env python
-# -*- coding: utf-8 -*-
-
-########################
-# Python 3.6.9
-# Author : Maxence Blanc - https://github.com/maxenceblanc
-# Creation Date : 11/2019
-########################
 
 # IMPORTS
 import os
 import sys
 import pygame
-from pygame.locals import *
+from pygame import locals as pylocals
 
 # CUSTOM IMPORTS
 import game_config as cfg
@@ -81,8 +73,8 @@ class Game:
 
         while not start:
             for e in pygame.event.get():
-                # pygame.event.set_allowed(None)
-                pygame.event.set_allowed((QUIT, MOUSEBUTTONDOWN, KEYDOWN))
+                pygame.event.set_blocked(None)
+                pygame.event.set_allowed((pylocals.QUIT, pylocals.MOUSEBUTTONDOWN, pylocals.KEYDOWN))
                 pygame.event.pump()
 
             key = pygame.key.get_pressed()
@@ -123,15 +115,15 @@ class Game:
             CLOCK.tick(cfg.FPS)  # FPS cap
             for e in pygame.event.get():
                 # pygame.event.set_allowed(None)
-                pygame.event.set_allowed((QUIT, MOUSEBUTTONDOWN, KEYDOWN))
+                pygame.event.set_allowed((pylocals.QUIT, pylocals.MOUSEBUTTONDOWN, pylocals.KEYDOWN))
                 pygame.event.pump()
 
                 if e.type == pygame.QUIT or (
-                    e.type == KEYDOWN and e.key == K_RETURN
+                    e.type == pylocals.KEYDOWN and e.key == pylocals.K_RETURN
                 ):  # quit condition
                     over = True
 
-                if e.type == KEYDOWN:
+                if e.type == pylocals.KEYDOWN:
                     if e.key == cfg.KEY_RECORD:
                         Game.DemoRecorder.recordState(self)
 

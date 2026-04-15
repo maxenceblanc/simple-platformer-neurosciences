@@ -1,31 +1,9 @@
-#! /usr/bin/env python
-# -*- coding: utf-8 -*-
-
-########################
-# Python 3.6
-# Author : Maxence Blanc - https://github.com/maxenceblanc
-########################
 
 # IMPORTS
 import pygame
 
 # FILE IMPORTS
 import game_config as cfg
-
-# Sub-modules
-
-##################################
-############| PLAYER |############
-##################################
-
-""" TO DO LIST ✔✘
-"""
-
-""" PROBLEMS
-"""
-
-""" NOTES
-"""
 
 ####################################################
 ###################| CLASSES |######################

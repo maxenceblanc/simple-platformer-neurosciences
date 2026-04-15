@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 
 import os
 
@@ -17,5 +15,3 @@ for folder in [
     else:
         print("Created %s folder" % folder)
 
-# Installer for python dependecies?
-# TODO

@@ -1,31 +1,13 @@
-#! /usr/bin/env python
-# -*- coding: utf-8 -*-
-
-########################
-# Python 3.6.9
-# Author : Maxence Blanc - https://github.com/maxenceblanc
-# Creation Date : 11/2019
-########################
 
 # IMPORTS
 import pygame
 import random as rd
-from pygame.locals import *
 
 # CUSTOM IMPORTS
 import levels.levels as levels
 import game_config as cfg
 import entities.Block
 
-
-""" TO DO LIST
-"""
-
-
-""" PROBLEMS
-PB :
-Ans :
-"""
 
 """ NOTES
 
@@ -36,11 +18,6 @@ coordinates:
 |
 v (y)
 """
-
-####################################################
-###################| CLASSES |######################
-####################################################
-
 
 ####################################################
 ##################| FONCTIONS |#####################

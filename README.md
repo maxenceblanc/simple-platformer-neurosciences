@@ -24,9 +24,6 @@ It is now very speedrun oriented. You can easily create your own levels, each on
 Make sure you have all the below listed dependencies installed.
 
 ```
-- python 3.6
-- pygame
-- pandas
 ```
 
 ## Usage <a name = "usage"></a>

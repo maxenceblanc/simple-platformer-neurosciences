@@ -1,6 +1,3 @@
-#! /usr/bin/env python
-# -*- coding: utf-8 -*-
-
 
 # #################################
 # SET OF LEVELS MADE FOR SPEEDRUNS
