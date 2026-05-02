@@ -1,7 +1,7 @@
 
 # Folder for run's data files
-DATA_FOLDER = "data"
-DATA_FILE = "data"
+DATA_FOLDER : str = "data"
+DATA_FILE : str = "data"
 
-DEMO_FOLDER = "demos"
-DEMO_PREFIX = "demo"
+DEMO_FOLDER : str = "demos"
+DEMO_PREFIX : str = "demo"

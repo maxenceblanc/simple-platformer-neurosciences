@@ -5,6 +5,8 @@ import pygame
 # FILE IMPORTS
 import game_config as cfg
 
+from .block import Block
+
 ####################################################
 ###################| CLASSES |######################
 ####################################################
@@ -13,25 +15,26 @@ import game_config as cfg
 class Player:
     """Player entity."""
 
-    def __init__(self):
-        self.rect = pygame.Rect(
-            cfg.START_X, cfg.START_Y, cfg.PLAYER_WIDTH, cfg.PLAYER_HEIGHT
-        )
-        self.speed_x = 0
-        self.speed_y = 0
+    def __init__(self) -> None:
+        self.rect: pygame.Rect = pygame.Rect(cfg.START_X, cfg.START_Y, cfg.PLAYER_WIDTH, cfg.PLAYER_HEIGHT)
+        self.speed_x : float = 0
+        self.speed_y : float = 0
 
-    def move(self, blocks):
+    def move(
+        self, 
+        blocks : list[Block]
+    ) -> None:
         """Moves the player.
 
         INPUTS:
                 list of blocks from the level.
         """
 
-        self.rect.x += self.speed_x
+        self.rect.x += int(self.speed_x)
 
         # Correcting not to get past the middle of the screen
         if self.rect.x > cfg.SIZE_X / 2:
-            self.rect.x = cfg.SIZE_X / 2
+            self.rect.x = int(cfg.SIZE_X / 2)
 
         # Correcting not to get past the left side of the screen
         if self.rect.x < 0:
@@ -41,14 +44,19 @@ class Player:
         # Moves the level when the Player reaches the middle of the screen
         if self.rect.x == cfg.SIZE_X / 2 and self.speed_x > 0:
             for block in blocks:
-                block.move(-self.speed_x, 0)
+                block.move(int(-self.speed_x), 0)
 
         self.collisions(self.speed_x, 0, blocks)
 
-        self.rect.y += self.speed_y
+        self.rect.y += int(self.speed_y)
         self.collisions(0, self.speed_y, blocks)
 
-    def collisions(self, speed_x, speed_y, blocks):
+    def collisions(
+        self, 
+        speed_x : float, 
+        speed_y : float, 
+        blocks : list[Block]
+    ) -> None:
         """Handling of collisions when moving the player.
 
         INPUTS:
@@ -73,7 +81,7 @@ class Player:
                     self.rect.top = block.rect.bottom
                     self.speed_y = 0
 
-    def slowdown(self):
+    def slowdown(self) -> None:
         """Slows the player down.
 
         INPUTS:

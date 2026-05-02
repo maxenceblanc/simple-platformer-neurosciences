@@ -2,13 +2,12 @@
 # IMPORTS
 import os
 import sys
-import pygame
-from pygame import locals as pylocals
+import pygame as pg
 
 # CUSTOM IMPORTS
 import game_config as cfg
 import config
-import levels.levels as levels
+from levels import levels
 
 import functions
 import entities.Player
@@ -32,7 +31,10 @@ class Game:
     # Demo recording
     DemoRecorder = None
 
-    def __init__(self, player_name):
+    def __init__(
+        self, 
+        player_name: str
+    ) -> None:
 
         self.random_gen = cfg.RANDOM_GEN
         self.can_lose = cfg.CAN_LOSE
@@ -58,7 +60,7 @@ class Game:
     def __repr__(self):
         chain = "simple-platformer\n"
 
-        chain += f"pygame time: {pygame.time.get_ticks() / 1000} secs"
+        chain += f"pygame time: {pg.time.get_ticks() / 1000} secs"
 
         return chain
 
@@ -72,16 +74,16 @@ class Game:
         start = False
 
         while not start:
-            for e in pygame.event.get():
-                pygame.event.set_blocked(None)
-                pygame.event.set_allowed((pylocals.QUIT, pylocals.MOUSEBUTTONDOWN, pylocals.KEYDOWN))
-                pygame.event.pump()
+            for e in pg.event.get():
+                pg.event.set_blocked(None)
+                pg.event.set_allowed((pg.QUIT, pg.MOUSEBUTTONDOWN, pg.KEYDOWN))
+                pg.event.pump()
 
-            key = pygame.key.get_pressed()
+            key = pg.key.get_pressed()
 
             if key[cfg.KEY_LEFT] or key[cfg.KEY_RIGHT] or key[cfg.KEY_UP]:
                 if (
-                    pygame.time.get_ticks() / 1000 > 0.5
+                    pg.time.get_ticks() / 1000 > 0.5
                 ):  # Arbitrary, used to wait for the game to be fully loaded
                     start = True
 
@@ -107,23 +109,23 @@ class Game:
         # Using this to wait for the user input to start time but still picture the level
         self.idleLoop(WINDOW)
 
-        self.pause_time = pygame.time.get_ticks() / 1000
+        self.pause_time = pg.time.get_ticks() / 1000
 
         # Main loop
         over = False
         while not over:
             CLOCK.tick(cfg.FPS)  # FPS cap
-            for e in pygame.event.get():
-                # pygame.event.set_allowed(None)
-                pygame.event.set_allowed((pylocals.QUIT, pylocals.MOUSEBUTTONDOWN, pylocals.KEYDOWN))
-                pygame.event.pump()
+            for e in pg.event.get():
+                # pg.event.set_allowed(None)
+                pg.event.set_allowed((pg.QUIT, pg.MOUSEBUTTONDOWN, pg.KEYDOWN))
+                pg.event.pump()
 
-                if e.type == pygame.QUIT or (
-                    e.type == pylocals.KEYDOWN and e.key == pylocals.K_RETURN
+                if e.type == pg.QUIT or (
+                    e.type == pg.KEYDOWN and e.key == pg.K_RETURN
                 ):  # quit condition
                     over = True
 
-                if e.type == pylocals.KEYDOWN:
+                if e.type == pg.KEYDOWN:
                     if e.key == cfg.KEY_RECORD:
                         Game.DemoRecorder.recordState(self)
 
@@ -145,7 +147,7 @@ class Game:
             functions.camera(self.player, self.blocks)
 
             # Moves the player when m1 is on click
-            if pygame.mouse.get_pressed()[0]:
+            if pg.mouse.get_pressed()[0]:
                 functions.mouse(self.player)
 
             # Moves the player
@@ -158,7 +160,7 @@ class Game:
                     chunks_passed += 1
 
             if chunks_passed == self.prev_chunks_passed + 1:
-                self.current_time = pygame.time.get_ticks() / 1000 - self.pause_time
+                self.current_time = pg.time.get_ticks() / 1000 - self.pause_time
                 print("chunk n°", chunks_passed, ": ", self.current_time)
 
                 self.chunk_times.append(round(self.current_time - self.last_time, 3))
@@ -204,7 +206,7 @@ class Game:
 
         # Updating the time for the save.
         # TODO: Is it more interesting to put it somewhere else?
-        pause_time = pygame.time.get_ticks() / 1000 - self.pause_time
+        pause_time = pg.time.get_ticks() / 1000 - self.pause_time
         attributes["pause_time"] = pause_time
 
         del attributes["can_lose"]
@@ -219,7 +221,7 @@ class Game:
         self.__dict__ = data
         self.can_lose = cfg.CAN_LOSE
 
-        self.pause_time = pygame.time.get_ticks() / 1000 - self.pause_time
+        self.pause_time = pg.time.get_ticks() / 1000 - self.pause_time
 
 
 if __name__ == "__main__":
@@ -234,14 +236,14 @@ if __name__ == "__main__":
         player_name = arguments[1]
 
     # Initializes pygame
-    pygame.init()
+    pg.init()
 
     # Time
-    CLOCK = pygame.time.Clock()
+    CLOCK = pg.time.Clock()
 
     # Display Setup
-    pygame.display.set_caption("simple platformer")  # sets the window's title
-    WINDOW = pygame.display.set_mode(
+    pg.display.set_caption("simple platformer")  # sets the window's title
+    WINDOW = pg.display.set_mode(
         (
             cfg.SIZE_X,  # Dimensions of WINDOW
             cfg.SIZE_Y,
@@ -251,5 +253,5 @@ if __name__ == "__main__":
     game = Game(player_name)
     game.main(WINDOW, CLOCK)
 
-    pygame.quit()
+    pg.quit()
     quit()
