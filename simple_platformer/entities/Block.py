@@ -20,8 +20,8 @@ class Block:
 
     def __init__(
         self, 
-        block_x: int, 
-        block_y: int, 
+        block_x: float, 
+        block_y: float, 
         type: str="default"
     ) -> None:
 
@@ -33,8 +33,8 @@ class Block:
 
     def move(
         self, 
-        distance_x: int, 
-        distance_y: int
+        distance_x: float, 
+        distance_y: float
     ) -> None:
         """Moves the blocks relatively.
 
@@ -42,8 +42,8 @@ class Block:
                 distance in x
                 distance in y
         """
-        self.rect.x += distance_x
-        self.rect.y += distance_y
+        self.rect.x += int(round(distance_x,0))
+        self.rect.y += int(round(distance_y,0))
 
 ####################################################
 ####################| PROGRAM |#####################

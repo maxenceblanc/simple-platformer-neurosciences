@@ -30,7 +30,7 @@ class Player:
                 list of blocks from the level.
         """
 
-        self.rect.x += int(self.speed_x)
+        self.rect.x += int(round(self.speed_x, 0))
 
         # Correcting not to get past the middle of the screen
         if self.rect.x > cfg.SIZE_X / 2:
@@ -44,11 +44,11 @@ class Player:
         # Moves the level when the Player reaches the middle of the screen
         if self.rect.x == cfg.SIZE_X / 2 and self.speed_x > 0:
             for block in blocks:
-                block.move(int(-self.speed_x), 0)
+                block.move(-self.speed_x, 0)
 
         self.collisions(self.speed_x, 0, blocks)
 
-        self.rect.y += int(self.speed_y)
+        self.rect.y += int(round(self.speed_y, 0))
         self.collisions(0, self.speed_y, blocks)
 
     def collisions(
@@ -92,7 +92,7 @@ class Player:
             self.speed_x = 0
 
         else:
-            self.speed_x = int(self.speed_x / cfg.SLOWDOWN__X)
+            self.speed_x = self.speed_x / cfg.SLOWDOWN__X
 
 
 ####################################################

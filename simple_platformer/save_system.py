@@ -60,10 +60,7 @@ def save(filename, player_name, score, count, secs, chunk_times, nb_chunks):
             }
         )
 
-    try:
-        data = data.append(new_entry, ignore_index=True)
-    except:
-        raise Exception("New entry format invalid.")
+    data = data.append(new_entry, ignore_index=True)
 
     data.to_csv(filename + ".csv", index=False)
 
