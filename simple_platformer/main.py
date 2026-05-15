@@ -10,7 +10,8 @@ import config
 from levels import levels
 
 import functions
-import entities.Player
+from entities.block import Block
+from entities.player import Player
 
 import save_system
 import recording_system
@@ -36,28 +37,28 @@ class Game:
         player_name: str
     ) -> None:
 
-        self.random_gen = cfg.RANDOM_GEN
-        self.can_lose = cfg.CAN_LOSE
+        self.random_gen : bool = cfg.RANDOM_GEN
+        self.can_lose : bool = cfg.CAN_LOSE
 
-        self.player_name = player_name
+        self.player_name : str = player_name
 
         # List of all the Blocks
-        self.blocks = []
+        self.blocks : list[Block]= []
 
         # Init the player
-        self.player = entities.Player.Player()
+        self.player = Player()
 
         # Inits TODO: explain variables
-        self.chunk_num = 1  # 1 because of the init chunk
-        self.prev_chunks_passed = 0
+        self.chunk_num : int = 1  # 1 because of the init chunk
+        self.prev_chunks_passed : int = 0
 
-        self.chunk_times = []
-        self.last_time = 0
-        self.current_time = 0.00000000001
+        self.chunk_times : list[float] = []
+        self.last_time : float = 0
+        self.current_time : float = 0.00000000001
 
-        Game.DemoRecorder = recording_system.DemoRecorder(self)
+        self.recorder = recording_system.DemoRecorder(self)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         chain = "simple-platformer\n"
 
         chain += f"pygame time: {pg.time.get_ticks() / 1000} secs"
@@ -100,7 +101,7 @@ class Game:
 
             functions.display(WINDOW, self.blocks, self.player)  # Window dispay
 
-    def main(self, WINDOWn, CLOCK):
+    def main(self, WINDOW, CLOCK):
         """Main function. Contains the main loop of the game."""
         # Loads the first chunk of the map
         functions.loadChunk(self.blocks, levels.level[0], 0)
@@ -127,18 +128,18 @@ class Game:
 
                 if e.type == pg.KEYDOWN:
                     if e.key == cfg.KEY_RECORD:
-                        Game.DemoRecorder.recordState(self)
+                        self.recorder.recordState()
 
                     if e.key == cfg.KEY_RESTART:
-                        Game.DemoRecorder.loadState("demo_start_First-Land.txt")
+                        self.recorder.loadState("demo_start_First-Land.txt")
 
                     if e.key == cfg.KEY_LOAD:
-                        Game.DemoRecorder.loadState(
+                        self.recorder.loadState(
                             "demo_2020-09-01_15-15-09_GMT_test_First-Land.txt"
                         )
 
                     if e.key == cfg.KEY_CUSTOM:
-                        print(Game.DemoRecorder.app)
+                        print(self.recorder.app)
 
             if self.player.rect.y + cfg.PLAYER_HEIGHT > cfg.SIZE_Y and self.can_lose:
                 over = True

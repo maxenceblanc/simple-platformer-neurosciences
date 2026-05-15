@@ -4,9 +4,10 @@ import pygame
 import random as rd
 
 # CUSTOM IMPORTS
-import levels.levels as levels
+from levels import levels
 import game_config as cfg
-import entities.Block
+from entities.block import Block
+from entities.player import Player
 
 
 """ NOTES
@@ -27,7 +28,11 @@ v (y)
 ### LEVEL GENERATION ### ----------------------
 
 
-def loadChunk(block_list, chunk, x_start):
+def loadChunk(
+    block_list: list, 
+    chunk: list, 
+    x_start: int
+) -> None:
     """Loads the chunk from the start coordinate.
 
     INPUTS:
@@ -41,15 +46,16 @@ def loadChunk(block_list, chunk, x_start):
     """
 
     # Sets the star of the player for the generation.
-    x, y = x_start, (cfg.VISIBILITY_Y - 1) * levels.CHUNK_HEIGHT * cfg.BLOCK_HEIGHT
+    x:int = x_start
+    y:int = (cfg.VISIBILITY_Y - 1) * levels.CHUNK_HEIGHT * cfg.BLOCK_HEIGHT
 
     # Generation
     for column in range(len(chunk[0])):
         for row in range(len(chunk)):
             if chunk[row][column] == "W":
-                block_list.append(entities.Block.Block(x, y))
+                block_list.append(Block(x, y))
             elif chunk[row][column] == "E":
-                block_list.append(entities.Block.Block(x, y, type="end"))
+                block_list.append(Block(x, y, type="end"))
 
             y += cfg.BLOCK_HEIGHT  # Goes downwards of one block
 
@@ -59,7 +65,7 @@ def loadChunk(block_list, chunk, x_start):
         )  # Get back up
 
 
-def endOfChunk(blocks):
+def endOfChunk(blocks: list) -> bool:
     """Detects if the last block of the last chunk is on screen.
 
     INPUTS:
@@ -71,7 +77,12 @@ def endOfChunk(blocks):
     return blocks[-1].rect.x < cfg.SIZE_X
 
 
-def levelGeneration(isRandom, blocks, level, chunk_num=None):
+def levelGeneration(
+    isRandom: bool, 
+    blocks: list, 
+    level: list, 
+    chunk_num: int
+) -> bool:
     """Handles the level generation, loads a chunk if needed.
 
     INPUTS:
@@ -110,7 +121,10 @@ def levelGeneration(isRandom, blocks, level, chunk_num=None):
 ### ACTIONS ### --------------------
 
 
-def move(player, blocks):
+def move(
+    player: Player, 
+    blocks: list
+) -> None:
     """Detects pressed keys and changes speeds accordingly.
     Then applies slowdowns.
 
@@ -162,7 +176,10 @@ def move(player, blocks):
     player.move(blocks)
 
 
-def ground(player, blocks):
+def ground(
+    player: Player, 
+    blocks: list
+) -> bool:
     """Detects if a block is under the Player.
 
     INPUTS:
@@ -183,7 +200,10 @@ def ground(player, blocks):
 ### WINDOW DISPLAY ### --------------------------
 
 
-def camera(player, blocks):
+def camera(
+    player: Player, 
+    blocks: list
+) -> None:
     """Moves the camera.
 
     INPUTS:
@@ -197,16 +217,16 @@ def camera(player, blocks):
         for block in blocks:
             block.move(-cfg.SPEED_CAMERA_X, 0)
 
-        player.rect.x -= cfg.SPEED_CAMERA_X
+        player.rect.x -= int(cfg.SPEED_CAMERA_X)
 
     elif key[cfg.CAMERA_LEFT]:
         for block in blocks:
             block.move(cfg.SPEED_CAMERA_X, 0)
 
-        player.rect.x += cfg.SPEED_CAMERA_X
+        player.rect.x += int(cfg.SPEED_CAMERA_X)
 
 
-def mouse(player):
+def mouse(player: Player) -> None:
     """Uses mouse position to set the player's position
 
     INPUTS:
@@ -217,7 +237,11 @@ def mouse(player):
     player.speed_x, player.speed_y = 0, 0
 
 
-def display(window, blocks, player):
+def display(
+    window: pygame.Surface, 
+    blocks: list, 
+    player: Player
+) -> None:
     """Updates the display.
 
     INPUTS:
@@ -243,7 +267,11 @@ def display(window, blocks, player):
 ### SCORE CALCULATIONS ### --------------------------
 
 
-def score_func(time, player, blocks):
+def score_func(
+    time: float, 
+    player: Player, 
+    blocks: list
+) -> tuple :
     """Score according to speed (block/sec) and distance traveled.
 
     INPUTS:

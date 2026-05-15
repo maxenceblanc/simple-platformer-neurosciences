@@ -8,6 +8,7 @@ import pickle
 
 # CUSTOM IMPORTS
 import config as cfg
+import game_config as gcfg
 
 
 ####################################################
@@ -16,27 +17,40 @@ import config as cfg
 
 
 class DemoRecorder:
-    def __init__(self, app):
+
+    def __init__(
+        self, 
+        app
+    ) -> None:
 
         self.app = app
 
-    def recordState(self, state):
-        """ """
+    def recordState(
+        self
+    ) -> None:
+        """ 
+        """
 
-        state = DemoRecorder.serializeState(self.app)
-        DemoRecorder.saveDemo(state, self.app.player_name, cfg.MAP_NAME)
+        state : bytes = DemoRecorder.serializeState(self.app)
+        DemoRecorder.saveDemo(state, self.app.player_name, gcfg.MAP_NAME)
 
-    def serializeState(self):
+    def serializeState(self) -> bytes:
         """Saves the current state of the game. This is to be able to replicate
         states in a replay system.
         """
 
-        game_state_serialized = pickle.dumps(self.app)
+        game_state_serialized : bytes = pickle.dumps(self.app)
 
         return game_state_serialized
 
-    def saveDemo(demo, player_name, map_name):
-        """Saves all the demo data into a file of the demo folder."""
+    @staticmethod
+    def saveDemo(
+        demo : bytes,
+        player_name : str,
+        map_name : str
+    )-> None:
+        """Saves all the demo data into a file of the demo folder.
+        """
 
         t = time.gmtime()
         current_time = time.strftime("%Y-%m-%d_%H-%M-%S_%Z", t)
@@ -52,7 +66,10 @@ class DemoRecorder:
         with open(file_path, "wb") as demo_file:
             demo_file.write(demo)
 
-    def loadState(self, filename):
+    def loadState(
+        self, 
+        filename : str
+    )-> None:
 
         with open(
             os.path.join(cfg.DEMO_FOLDER, filename), "rb"
@@ -67,4 +84,6 @@ class DemoRecorder:
 ####################################################
 
 if __name__ == "__main__":
-    DemoRecorder.saveDemo("", "max", "First Land")
+    
+    recorder = DemoRecorder(None)
+    DemoRecorder.saveDemo(b"", "max", "First Land")

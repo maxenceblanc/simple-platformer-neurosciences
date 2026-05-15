@@ -23,24 +23,24 @@ MAP_NAME : str = levels.NAME
 PROPORTION : float = 1
 
 # Size of blocks
-BLOCK_WIDTH : float = 16 * PROPORTION
-BLOCK_HEIGHT : float = 16 * PROPORTION
+BLOCK_WIDTH : int = int(16 * PROPORTION)
+BLOCK_HEIGHT : int = int(16 * PROPORTION)
 
 # For the display
-VISIBILITY_X : float = 45  # Width of WINDOW in amount of blocks.
-VISIBILITY_Y : float = 2  # Height of WINDOW in amount of chunk height.
-SIZE_X : float = BLOCK_WIDTH * VISIBILITY_X  # Width of WINDOW in pixels.
-SIZE_Y : float = (
+VISIBILITY_X : int = 45  # Width of WINDOW in amount of blocks.
+VISIBILITY_Y : int = 2  # Height of WINDOW in amount of chunk height.
+SIZE_X : int = BLOCK_WIDTH * VISIBILITY_X  # Width of WINDOW in pixels.
+SIZE_Y : int = (
     levels.CHUNK_HEIGHT * BLOCK_HEIGHT * VISIBILITY_Y
 )  # Height of WINDOW in pixels.
 
 # Player size
-PLAYER_WIDTH : float = 1 * BLOCK_WIDTH
-PLAYER_HEIGHT : float = 2 * BLOCK_HEIGHT
+PLAYER_WIDTH : int = 1 * BLOCK_WIDTH
+PLAYER_HEIGHT : int = 2 * BLOCK_HEIGHT
 
 # Start
-START_X : float = 0
-START_Y : float = SIZE_Y - BLOCK_HEIGHT - PLAYER_HEIGHT
+START_X : int = 0
+START_Y : int = SIZE_Y - BLOCK_HEIGHT - PLAYER_HEIGHT
 
 # Colours
 WHITE : tuple[int, int, int] = (255, 255, 255)
